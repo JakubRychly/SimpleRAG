@@ -7,7 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace PrvniRAG;
+namespace SimpleRAG;
 
 public partial class MainViewModel : ObservableObject
 {

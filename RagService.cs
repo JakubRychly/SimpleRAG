@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.SemanticKernel.Text;
 
-namespace PrvniRAG;
+namespace SimpleRAG;
 
 public class RagService
 {
@@ -124,6 +124,7 @@ public class RagService
             results.Add(new TextChunkModel
             {
                 Id = reader.GetString(0),
+                Distance = reader.GetDouble(1),
                 Text = reader.GetString(2),
                 SourceFile = reader.GetString(3)
             });

@@ -1,6 +1,6 @@
 using System;
 
-namespace PrvniRAG;
+namespace SimpleRAG;
 
 public class TextChunkModel
 {
@@ -9,6 +9,8 @@ public class TextChunkModel
     public string Text { get; set; } = string.Empty;
 
     public string SourceFile { get; set; } = string.Empty;
+
+    public double Distance { get; set; }
 
     // Vektor se ukládá přímo v sqlite-vec tabulce, v modelu ho nepotřebujeme
     public ReadOnlyMemory<float>? Vector { get; set; }

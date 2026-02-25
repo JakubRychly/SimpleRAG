@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace PrvniRAG;
+namespace SimpleRAG;
 
 /// <summary>
 /// Interaction logic for App.xaml

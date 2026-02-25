@@ -3,7 +3,7 @@ using System.Windows.Data;
 using System.Globalization;
 using System;
 
-namespace PrvniRAG;
+namespace SimpleRAG;
 
 public partial class MainWindow : Window
 {
