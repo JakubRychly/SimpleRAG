@@ -1,0 +1,90 @@
+﻿<Window x:Class="PrvniRAG.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PrvniRAG"
+        mc:Ignorable="d"
+        Title="První RAG Aplikace" Height="600" Width="800" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Nastavení API klíče -->
+        <GroupBox Header="1. Nastavení API" Grid.Row="0" Margin="0,0,0,10" Padding="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Gemini API Klíč:" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Margin="5" Text="{Binding ApiKey, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"/>
+                <Button Grid.Column="2" Content="Inicializovat" Command="{Binding InitializeServiceCommand}" Padding="15,5" Margin="5,0,0,0" IsEnabled="{Binding IsServiceReady, Converter={StaticResource InverseBooleanConverter}}"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Nahrání dokumentů -->
+        <GroupBox Header="2. Nahrání dokumentů (Knowledge Base)" Grid.Row="1" Margin="0,0,0,10" Padding="5">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Vybrat .txt dokumenty a uložit do RAG (SQLite)" 
+                        Command="{Binding LoadDocumentsCommand}" 
+                        Padding="15,5" 
+                        IsEnabled="{Binding IsServiceReady}"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Vyhledávání -->
+        <GroupBox Header="3. Vyhledat a generovat" Grid.Row="2" Margin="0,0,0,10" Padding="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Margin="0,0,5,0" Padding="5" 
+                         Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" 
+                         ToolTip="Zadejte dotaz (např. 'Co je to proměnná?')"/>
+                <Button Grid.Column="1" Content="Hledat" 
+                        Command="{Binding SearchCommand}" 
+                        Padding="20,5" 
+                        IsEnabled="{Binding IsServiceReady}"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Výsledky hledání -->
+        <GroupBox Header="Nalezené výsledky z dokumentů (Top 3)" Grid.Row="3" Margin="0,0,0,10" Padding="5">
+            <ListBox ItemsSource="{Binding SearchResults}" HorizontalContentAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="LightGray" BorderThickness="1" Margin="2" Padding="5">
+                            <StackPanel>
+                                <TextBlock Text="{Binding SourceFile}" FontWeight="Bold" Foreground="DarkBlue" Margin="0,0,0,5"/>
+                                <TextBlock Text="{Binding Text}" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </GroupBox>
+
+        <!-- Stavový řádek -->
+        <StatusBar Grid.Row="4">
+            <StatusBarItem>
+                <TextBlock Text="{Binding StatusMessage}" FontWeight="SemiBold"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

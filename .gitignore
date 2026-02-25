@@ -1,0 +1,18 @@
+# Sestavené binárky (output)
+[Bb]in/
+[Oo]bj/
+
+# Balíčky a závislosti
+[Pp]ackages/
+[.][Nn]uget/
+
+# Nastavení VS Code a Visual Studia
+.vscode/
+.vs/
+*.user
+*.suo
+
+# Ostatní
+*.txt
+*.sqlite
+Testovaci data
